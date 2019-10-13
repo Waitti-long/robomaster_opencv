@@ -24,6 +24,9 @@ while success:
             # print(sc)
             frame = cv2.rectangle(frame, (s[1][0], s[1][1]), (s[1][0] + s[1][2], s[1][1] + s[1][3]), (0, 255, 255), 2)
             frame = cv2.putText(frame, str(sc), (s[1][0], s[1][1]), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+            x, y, w, h = s[1][0], s[1][1], s[1][2], s[1][3]
+            horizontal, vertical = utils.pnp(np.float64([[x, y], [x, x+w], [x+w, y+h], [x, y+h]]))
+            print(horizontal, " ", vertical)
         # else:
         #     img = cv2.rectangle(frame, (s[1][0], s[1][1]), (s[1][0] + s[1][2], s[1][1] + s[1][3]),
         #                        (0, 0, 255), 2)

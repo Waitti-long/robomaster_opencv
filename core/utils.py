@@ -92,7 +92,7 @@ def calNumLocation2(rec1, rec2, img):
 
 
 def findNum(img, rec1, rec2):
-    rec = max(rec1, rec2, key=lambda z: z[2]*z[3])
+    rec = max(rec1, rec2, key=lambda z: z[2] * z[3])
     aver = getLight(img)
     tmp = cv2.GaussianBlur(img, (9, 9), 0)
     tmp = cv2.cvtColor(tmp, cv2.COLOR_BGR2GRAY)
@@ -258,3 +258,19 @@ def findSquaresNotUseLight(img):
 
     return squares
 
+
+def cal_angel(point3d):
+    horizontal = -1 * np.arctan(point3d[0] / point3d[2])
+    vertical = -1 * np.arctan(point3d[1] / point3d[2])
+    return horizontal, vertical
+
+
+def pnp(points_2d, points_3d=None):
+    if points_3d is None:
+        points_3d = np.float32([[0, 0, 0], [135, 0, 0], [135, 125, 0], [0, 125, 0]])
+    camera_marix = np.float64([[970.76885986, 0., 607.01284774],
+                               [0., 969.5692749, 355.37105518],
+                               [0., 0., 1.]])
+    dist = np.float64([-0.17047018, 0.3970236, 0.00136597, -0.00702596, -0.37291715])
+    retval, rvec, tvec, fuck = cv2.solvePnPRansac(points_3d, points_2d, camera_marix, dist)
+    return cal_angel(tvec)
