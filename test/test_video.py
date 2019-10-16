@@ -4,8 +4,7 @@ import joblib
 import numpy as np
 
 counts = np.zeros(10, dtype=np.int0)
-clf = joblib.load("../model/mlfbig3.m")
-clf_svm = joblib.load("../model/svm6_1.m")
+clf = joblib.load("../model/mlfbig.m")
 video = cv2.VideoCapture("../resource/res/多个装甲板.avi")
 video.set(3, 1920)
 video.set(4, 1080)
@@ -26,7 +25,7 @@ while success:
             frame = cv2.putText(frame, str(sc), (s[1][0], s[1][1]), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
             x, y, w, h = s[1][0], s[1][1], s[1][2], s[1][3]
             horizontal, vertical = utils.pnp(np.float64([[x, y], [x, x+w], [x+w, y+h], [x, y+h]]))
-            print(horizontal, " ", vertical)
+            # print(horizontal, " ", vertical)
         # else:
         #     img = cv2.rectangle(frame, (s[1][0], s[1][1]), (s[1][0] + s[1][2], s[1][1] + s[1][3]),
         #                        (0, 0, 255), 2)
